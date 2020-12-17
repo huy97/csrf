@@ -1,7 +1,7 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus } from "@nestjs/common";
 
-export class CsrfNotFoundException extends HttpException{
-    constructor(){
-        super("CSRF token not found", HttpStatus.FORBIDDEN);
-    }
+export class CsrfNotFoundException extends HttpException {
+  constructor() {
+    super("CSRF token not found", HttpStatus.FORBIDDEN);
+  }
 }
