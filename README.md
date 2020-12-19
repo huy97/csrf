@@ -14,7 +14,7 @@ If you have questions on how this module is implemented, please read [Understand
 
 Requires either a session middleware or cookie-parser to be initialized first, and need enableCors.
 
-```
+```javascript
   app.use(cookieParser());
 ```
 
@@ -28,29 +28,29 @@ $ npm install ncsrf --save
 
 ## Usage <a name = "usage"></a>
 
-Import in main.ts
+Import in *main.ts*
 
-```
+```javascript
 import {nestCsrf, CsrfFilter} from 'ncsrf';
 import cookieParser from 'cookie-parser';
 ```
 
 Enable CSRF in global
 
-```
+```javascript
   app.use(cookieParser());
   app.use(nestCsrf());
 ```
 
 Custom exception
 
-```
+```javascript
   app.useGlobalFilters(new CsrfFilter);
 ```
 
 Generate token here
 
-```
+```javascript
   @Get('/token')
   getCsrfToken(@Req() req): any {
     return {
@@ -61,7 +61,7 @@ Generate token here
 
 Protected route with csrf
 
-```
+```javascript
   @Post()
   @Csrf()
   needProtect(): string{
