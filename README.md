@@ -28,27 +28,38 @@ $ npm install ncsrf --save
 
 ## Usage <a name = "usage"></a>
 
-Import in *main.ts*
+### Import in *main.ts* and enable
 
 ```javascript
-import {nestCsrf, CsrfFilter} from 'ncsrf';
-import cookieParser from 'cookie-parser';
-```
+  import {nestCsrf, CsrfFilter} from 'ncsrf';
+  import cookieParser from 'cookie-parser';
 
-Enable CSRF in global
-
-```javascript
   app.use(cookieParser());
   app.use(nestCsrf());
 ```
+### nestCsrf([options])
+- signed - indicates if the cookie should be signed (defaults to false).
+- key - the name of the cookie to use to store the token secret (defaults to '_csrf').
+- ttl - The time to live of the cookie use to store the token secret (default 300s).
 
-Custom exception
+### Custom exception message
 
 ```javascript
   app.useGlobalFilters(new CsrfFilter);
 ```
 
-Generate token here
+Or use your custom exception filter by catch 2 class
+```javascript
+  CsrfInvalidException
+```
+And
+
+```javascript
+  CsrfNotFoundException
+```
+## Example
+
+### Generate token here
 
 ```javascript
   @Get('/token')
@@ -59,9 +70,11 @@ Generate token here
   }
 ```
 
-Protected route with csrf
+### Protected route with csrf
 
 ```javascript
+  import {Csrf} from "ncsrf";
+  ...
   @Post()
   @Csrf()
   needProtect(): string{
