@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus } from "@nestjs/common";
 
 export class CsrfInvalidException extends HttpException {
-  constructor() {
-    super("Invalid CSRF Token", HttpStatus.FORBIDDEN);
+  constructor(message?: string, code?: HttpStatus) {
+    super(message || "Invalid CSRF Token", code || HttpStatus.FORBIDDEN);
   }
 }

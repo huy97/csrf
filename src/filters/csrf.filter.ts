@@ -5,8 +5,8 @@ import {
   HttpException,
 } from "@nestjs/common";
 import { Response } from "express";
-import { CsrfInvalidException } from "./../exceptions/csrf-invalid.exception";
-import { CsrfNotFoundException } from "./../exceptions/csrf-not-found.exception";
+import { CsrfInvalidException } from "../exceptions/csrf-invalid.exception";
+import { CsrfNotFoundException } from "../exceptions/csrf-not-found.exception";
 
 @Catch(CsrfInvalidException, CsrfNotFoundException)
 export class CsrfFilter implements ExceptionFilter {
