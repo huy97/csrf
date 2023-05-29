@@ -1,11 +1,11 @@
-# @nestjs/csrf
+# Nestjs CSRF token validator
 
 ## Table of Contents
 
 - [About](#about)
 - [Usage](#usage)
 
-## About <a name = "about"></a>
+## About
 
 Nestjs CSRF protection middleware.
 If you have questions on how this module is implemented, please read [Understanding CSRF](https://github.com/pillarjs/understanding-csrf).
@@ -15,7 +15,7 @@ If you have questions on how this module is implemented, please read [Understand
 Requires either a session middleware or cookie-parser to be initialized first, and need enableCors.
 
 ```javascript
-  app.use(cookieParser());
+app.use(cookieParser());
 ```
 
 ### Installing
@@ -26,37 +26,48 @@ This is a Node.js module available through the npm registry. Installation is don
 $ npm install ncsrf --save
 ```
 
+or
+
+```
+$ yarn add ncsrf
+```
+
 ## Usage <a name = "usage"></a>
 
-### Import in *main.ts* and enable
+### Import in _main.ts_ to enable the middleware globally
 
 ```javascript
-  import {nestCsrf, CsrfFilter} from 'ncsrf';
-  import cookieParser from 'cookie-parser';
+import { nestCsrf, CsrfFilter } from "ncsrf";
+import cookieParser from "cookie-parser";
 
-  app.use(cookieParser());
-  app.use(nestCsrf());
+app.use(cookieParser());
+app.use(nestCsrf());
 ```
+
 ### nestCsrf([options])
+
 - signed - indicates if the cookie should be signed (defaults to false).
-- key - the name of the cookie to use to store the token secret (defaults to '_csrf').
+- key - the name of the cookie to use to store the token secret (defaults to '\_csrf').
 - ttl - The time to live of the cookie use to store the token secret (default 300s).
 
 ### Custom exception message
 
 ```javascript
-  app.useGlobalFilters(new CsrfFilter);
+app.useGlobalFilters(new CsrfFilter());
 ```
 
 Or use your custom exception filter by catch 2 class
+
 ```javascript
-  CsrfInvalidException
+CsrfInvalidException;
 ```
+
 And
 
 ```javascript
-  CsrfNotFoundException
+CsrfNotFoundException;
 ```
+
 ## Example
 
 ### Generate token here
@@ -81,3 +92,10 @@ And
     return "Protected!";
   }
 ```
+
+### Issue & contribute
+
+- If you have any issue, please create an issue.
+- If you want to contribute, please create a pull request.
+
+### Thank you for using this module.

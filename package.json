@@ -1,6 +1,6 @@
 {
   "name": "ncsrf",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Simple NestJS CSRF verify token",
   "main": "dist/index.js",
   "types": "dist/index.ts",
@@ -9,6 +9,9 @@
     "build": "rimraf dist && tsc",
     "prepublish": "npm run build"
   },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/huy97/csrf.git"
