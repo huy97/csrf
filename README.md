@@ -4,6 +4,9 @@
 
 - [About](#about)
 - [Usage](#usage)
+- [How to verify csrf token](#how-to-verify-csrf-token)
+- [Restful API Setup](#restful-api-setup)
+- [GraphQL Setup](#graphql-setup)
 
 ## About
 
@@ -32,7 +35,7 @@ or
 $ yarn add ncsrf
 ```
 
-## Usage <a name = "usage"></a>
+## Usage
 
 ### Import in _main.ts_ to enable the middleware globally
 
@@ -68,7 +71,22 @@ And
 CsrfNotFoundException;
 ```
 
-## Example
+### How to verify csrf token
+
+HTTP Request must be have at least one of these headers:
+
+- csrf-token
+- xsrf-token
+- x-csrf-token
+- x-xsrf-token  
+  or query param:
+- \_csrf  
+  or body param:
+- \_csrf
+
+## Restful API Setup
+
+**Important**: Request must be sent with `withCredentials` set to `true` to allow cookies to be sent from the frontend or `credentials` set to `include` in fetch API.
 
 ### Generate token here
 
@@ -88,6 +106,55 @@ CsrfNotFoundException;
   ...
   @Post()
   @Csrf()
+  needProtect(): string{
+    return "Protected!";
+  }
+```
+
+### Protected route with csrf and custom exception message
+
+```javascript
+  import {Csrf} from "ncsrf";
+  ...
+  @Post()
+  @Csrf("Custom exception message")
+  needProtect(): string{
+    return "Protected!";
+  }
+```
+
+## GraphQL Setup
+
+**Important**: Request must be sent with `withCredentials` set to `true` to allow cookies to be sent from the frontend or `credentials` set to `include` in fetch API.
+
+### Generate token here
+
+```javascript
+  @Query((returns) => string, { name: 'getToken', nullable: false })
+  async getUsers(@Context('req') req: any) {
+    return req?.csrfToken();
+  }
+```
+
+### Protected route with csrf
+
+```javascript
+  import {CsrfQL} from "ncsrf";
+  ...
+  @Mutation((returns) => string, { name: 'needProtect', nullable: false })
+  @CsrfQL()
+  needProtect(): string{
+    return "Protected!";
+  }
+```
+
+### Protected route with csrf and custom exception message
+
+```javascript
+  import {CsrfQL} from "ncsrf";
+  ...
+  @Mutation((returns) => string, { name: 'needProtect', nullable: false })
+  @CsrfQL("Custom exception message")
   needProtect(): string{
     return "Protected!";
   }

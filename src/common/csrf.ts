@@ -1,6 +1,6 @@
 import Cookie from "cookie";
-import Tokens from "csrf";
 import { sign } from "cookie-signature";
+import Tokens from "csrf";
 
 type NestCsrfOptions = {
   signed?: boolean;
