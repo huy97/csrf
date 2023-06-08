@@ -1,6 +1,6 @@
 {
   "name": "ncsrf",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Simple NestJS CSRF verify token",
   "main": "dist/index.js",
   "types": "dist/index.ts",

@@ -1,12 +1,28 @@
 import Cookie from "cookie";
 import { sign } from "cookie-signature";
 import Tokens from "csrf";
+import { Request, Response } from "express";
 
-type NestCsrfOptions = {
+interface CookieConfig {
+  signed?: boolean;
+  key?: string;
+  path?: string;
+  httpOnly?: boolean;
+  maxAge?: number;
+  ttl?: number;
+}
+
+export interface NestCsrfOptions {
   signed?: boolean;
   key?: string;
   ttl?: number;
-};
+}
+
+export interface NestCsrfRequest extends Request {
+  secret?: string;
+  cookieConfig?: NestCsrfOptions;
+  csrfToken?: () => string;
+}
 
 const tokenProvider = new Tokens({
   secretLength: 16,
@@ -15,7 +31,7 @@ const tokenProvider = new Tokens({
 
 const nestCsrf = (options?: NestCsrfOptions) => {
   const sessionKey = "session";
-  const cookieConfig = {
+  const cookieConfig: CookieConfig = {
     signed: false,
     key: "_csrf",
     path: "/",
@@ -23,7 +39,7 @@ const nestCsrf = (options?: NestCsrfOptions) => {
     maxAge: options && options.ttl ? options.ttl : 300,
     ...options,
   };
-  return function csrf(req, res, next) {
+  return function csrf(req: NestCsrfRequest, res: Response, next) {
     let csrfTokenValue = "";
     let secret = getSecretFromRequest(req, sessionKey, cookieConfig);
     if (!secret) {
@@ -40,7 +56,11 @@ const nestCsrf = (options?: NestCsrfOptions) => {
   };
 };
 
-const getSecretFromRequest = (req, sessionKey, cookie) => {
+const getSecretFromRequest = (
+  req: NestCsrfRequest,
+  sessionKey: string,
+  cookie: CookieConfig
+) => {
   var bag = getSecretBag(req, sessionKey, cookie);
   var key = cookie ? cookie.key : "csrfSecret";
   if (!bag) {
@@ -49,7 +69,7 @@ const getSecretFromRequest = (req, sessionKey, cookie) => {
   return bag[key];
 };
 
-const getCsrfFromRequest = (req) => {
+const getCsrfFromRequest = (req: NestCsrfRequest) => {
   return (
     (req.body && req.body._csrf) ||
     (req.query && req.query._csrf) ||
@@ -72,7 +92,13 @@ const setCookie = (res, name, value, options) => {
   res.setHeader("set-cookie", header);
 };
 
-const setSecret = (req, res, sessionKey, value, cookie) => {
+const setSecret = (
+  req: NestCsrfRequest,
+  res,
+  sessionKey: string,
+  value: string,
+  cookie: CookieConfig
+) => {
   if (cookie) {
     if (cookie.signed) {
       value = "s:" + sign(value, req.secret);
@@ -83,7 +109,11 @@ const setSecret = (req, res, sessionKey, value, cookie) => {
   }
 };
 
-const getSecretBag = (req, sessionKey, cookie) => {
+const getSecretBag = (
+  req: NestCsrfRequest,
+  sessionKey: string,
+  cookie: CookieConfig
+) => {
   if (cookie) {
     var cookieKey = cookie.signed ? "signedCookies" : "cookies";
     return req[cookieKey];
