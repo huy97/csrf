@@ -76,7 +76,11 @@ const getCsrfFromRequest = (req: NestCsrfRequest) => {
     req.headers["csrf-token"] ||
     req.headers["xsrf-token"] ||
     req.headers["x-csrf-token"] ||
-    req.headers["x-xsrf-token"]
+    req.headers["x-xsrf-token"] ||
+    req.signedCookies["csrf-token"] ||
+    req.signedCookies["xsrf-token"] ||
+    req.signedCookies["x-csrf-token"] ||
+    req.signedCookies["x-xsrf-token"]
   );
 };
 
