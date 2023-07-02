@@ -13,6 +13,12 @@
 Nestjs CSRF protection middleware.
 If you have questions on how this module is implemented, please read [Understanding CSRF](https://github.com/pillarjs/understanding-csrf).
 
+### Deps version
+
+- current -> @nestjs/common ^10.0
+- 1.0.7 -> @nestjs/common ^9.4
+- 1.0.2 -> @nestjs/common ^7.6
+
 ### Prerequisites
 
 Requires either a session middleware or cookie-parser to be initialized first, and need enableCors.
