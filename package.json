@@ -1,6 +1,6 @@
 {
   "name": "ncsrf",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Simple NestJS CSRF verify token",
   "main": "dist/index.js",
   "types": "dist/index.ts",
@@ -34,8 +34,8 @@
     "csrf": "^3.1.0"
   },
   "peerDependencies": {
-    "@nestjs/common": "^9.4.2",
-    "@nestjs/graphql": "^11.0.6",
+    "@nestjs/common": "^10.2.2",
+    "@nestjs/graphql": "^12.0.4",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1"
   },
