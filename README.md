@@ -15,7 +15,7 @@ If you have questions on how this module is implemented, please read [Understand
 
 ### Deps version
 
-- current -> @nestjs/common ^10.0
+- current -> @nestjs/common >= 10.x
 - 1.0.7 -> @nestjs/common ^9.4
 - 1.0.2 -> @nestjs/common ^7.6
 
